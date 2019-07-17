@@ -6,12 +6,12 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/03 08:37:55 by ahouel            #+#    #+#              #
-#    Updated: 2018/02/01 14:14:33 by lgaveria         ###   ########.fr        #
+#    Updated: 2018/03/16 17:24:23 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
 VPATH = ./srcs/
 HDIR = ./includes
@@ -50,7 +50,7 @@ all : $(NAME)
 
 $(NAME) : $(SRC)
 	@echo "\033[32mCompilation of \033[1m$(notdir $(NAME))\033[0m \033[32m...\033[0m"
-	@$(CC) $(CFLAGS) -I $(HDIR) $(SRC)
+	@$(CC) -c $(CFLAGS) -I $(HDIR) $(SRC)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
