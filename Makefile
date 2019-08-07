@@ -6,15 +6,22 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/03 08:37:55 by ahouel            #+#    #+#              #
-#    Updated: 2018/03/16 17:24:23 by ahouel           ###   ########.fr        #
+#    Updated: 2019/08/07 18:25:02 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+################################# NAMES ########################################
+
+CC = clang
 CFLAGS = -Wall -Wextra -Werror
 NAME = libft.a
-VPATH = ./srcs/
-HDIR = ./includes
+SRC_PATH	= ./srcs/
+OBJ_PATH	= ./objs/
+INC_PATH	= ./includes/
+INC_FILES	= ft_printf.h		\
+			  get_next_line.h	\
+			  libft.h
+
 FCTS = ft_memset ft_bzero ft_memcpy ft_memccpy \
 	   ft_memmove ft_memchr ft_memrchr ft_memcmp \
 	   ft_strlen ft_strdup ft_strndup ft_strcpy \
@@ -42,20 +49,46 @@ FCTS = ft_memset ft_bzero ft_memcpy ft_memccpy \
 	   pf_apply_color pf_memjoin2 pf_dispatch_convert \
 	   ft_reader ft_malloc_2d ft_free_2d ft_str_isdigit \
 	   ft_bswap ft_iswhitespace ft_tablen ft_strfulltrim
-SRCS = $(addsuffix .c, $(FCTS))
-SRC = $(addprefix $(VPATH), $(SRCS))
-OBJ = $(SRCS:.c=.o)
+
+SRCS_FILES = $(addsuffix .c, $(FCTS))
+SRC = $(addprefix $(SRC_PATH), $(SRCS))
+
+OBJ_NAMES = $(SRCS_FILES:.c=.o)
+OBJ_FILES = $(addprefix $(OBJ_PATH), $(OBJ_NAMES))
+
+
+################################ COLORS #######################################
+
+NORMAL = "\033[0m"
+BOLD = "\033[1m"
+YELLOW = "\033[0;33m"
+RED = "\033[0;31m"
+GREEN = "\033[0;32m"
+BLUE = "\033[0;34m"
+CYAN = "\033[0;36m"
+MAGENTA = "\033[0;35m"
+UP = "\033[A"
+CUT = "\033[K"
+
+################################ RULES ########################################
 
 all : $(NAME)
 
-$(NAME) : $(SRC)
-	@echo "\033[32mCompilation of \033[1m$(notdir $(NAME))\033[0m \033[32m...\033[0m"
-	@$(CC) -c $(CFLAGS) -I $(HDIR) $(SRC)
-	@ar rc $(NAME) $(OBJ)
+$(OBJ_PATH):
+	@mkdir $(OBJ_PATH) 2> /dev/null || true
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c
+	@echo $(BLUE)Compilation of $(BOLD)$(notdir $<)$(BLUE) ...$(NORMAL)
+	@$(CC) $(CFLAGS) -MMD -c $< -o $@ -I $(INC_PATH)
+	@echo $(UP)$(CUT)$(UP)
+
+$(NAME) : $(LIB) $(OBJ_PATH) $(OBJ_FILES) $(addprefix $(INC_PATH), $(INC_FILES))
+	@ar rc $(NAME) $(OBJ_FILES)
 	@ranlib $(NAME)
+	@echo $(GREEN)Compilation of $(BOLD)$(notdir $(NAME))$(GREEN) done.$(NORMAL)
 
 clean :
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_PATH)
 
 fclean : clean
 	@rm -f $(NAME)
