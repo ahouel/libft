@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 12:14:41 by ahouel            #+#    #+#             */
-/*   Updated: 2018/02/01 14:14:49 by lgaveria         ###   ########.fr       */
+/*   Updated: 2019/11/07 15:29:54 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,35 @@
 # include <wchar.h>
 # include "get_next_line.h"
 # include "ft_printf.h"
+
+/*
+**	Colors
+*/
+
+# define COLOR_NORMAL	"\033[0m"
+# define COLOR_BOLD		"\033[1m"
+# define COLOR_YELLOW	"\033[33m"
+# define COLOR_RED		"\033[31m"
+# define COLOR_GREEN	"\033[32m"
+# define COLOR_BLUE		"\033[34m"
+# define COLOR_CYAN		"\033[36m"
+# define COLOR_MAGENTA	"\033[35m"
+
+/*
+**	Structure for linked lists
+*/
+
+struct			s_list
+{
+	void			*content;
+	size_t			content_size;
+	struct s_list	*next;
+};
+typedef struct s_list	t_list;
+
+/*
+**	Libft functions
+*/
 
 void			*ft_memset(void	*b, int c, size_t len);
 void			ft_bzero(void *b, size_t len);
@@ -77,13 +106,6 @@ void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char const *s, int fd);
 void			ft_putendl_fd(char const *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
-struct			s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-};
-typedef struct s_list	t_list;
 t_list			*ft_lstnew(void	const *content, size_t content_size);
 void			ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void			ft_lstdel(t_list **alst, void (*del)(void *, size_t));
@@ -115,4 +137,5 @@ void			ft_bswap(void *bytes, size_t len);
 int				ft_iswhitespace(char c);
 size_t			ft_tablen(char **tab);
 char			*ft_strfulltrim(char const *s);
+void			ft_putnbr_base(size_t nb, int size_base);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahouel <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/23 12:34:41 by ahouel            #+#    #+#             */
-/*   Updated: 2016/12/05 16:53:57 by ahouel           ###   ########.fr       */
+/*   Updated: 2019/08/13 12:21:56 by ahouel           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 
 void	ft_putstr(char const *s)
 {
-	if (s != NULL)
-		while (*s)
-			ft_putchar((char)*s++);
+	ft_putstr_fd(s, 1);
 }

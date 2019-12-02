@@ -6,7 +6,7 @@
 #    By: ahouel <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/12/03 08:37:55 by ahouel            #+#    #+#              #
-#    Updated: 2019/08/07 18:25:02 by ahouel           ###   ########.fr        #
+#    Updated: 2019/11/07 15:29:17 by ahouel           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ FCTS = ft_memset ft_bzero ft_memcpy ft_memccpy \
 	   ft_factorial ft_putlst get_next_line \
 	   ft_lldtoa_base ft_ulldtoa_base ft_wctomb \
 	   ft_wstrtostr ft_wstrlen ft_strnlen ft_abs \
-	   ft_stradd ft_memjoin \
+	   ft_stradd ft_memjoin ft_putnbr_base \
 	   ft_printf pf_args pf_get_convert pf_get_flags \
 	   pf_get_lenght pf_get_precision pf_get_width \
 	   pf_convert_nbr pf_convert_char pf_convert_ptr \
@@ -56,6 +56,7 @@ SRC = $(addprefix $(SRC_PATH), $(SRCS))
 OBJ_NAMES = $(SRCS_FILES:.c=.o)
 OBJ_FILES = $(addprefix $(OBJ_PATH), $(OBJ_NAMES))
 
+DEP = $(OBJ_FILES:.o=.d)
 
 ################################ COLORS #######################################
 
@@ -73,6 +74,8 @@ CUT = "\033[K"
 ################################ RULES ########################################
 
 all : $(NAME)
+
+-include $(DEP)
 
 $(OBJ_PATH):
 	@mkdir $(OBJ_PATH) 2> /dev/null || true
